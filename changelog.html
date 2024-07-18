@@ -6,12 +6,21 @@
     <title>文件生成软件 - 更新日志</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --item-background: #f8f9fa;
+        }
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f2f5;
-            color: #333;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
         .navbar {
             position: fixed;
@@ -34,7 +43,7 @@
         .navbar-logo {
             font-size: 24px;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--secondary-color);
             text-decoration: none;
         }
         .navbar ul {
@@ -47,7 +56,7 @@
             margin-left: 30px;
         }
         .navbar ul li a {
-            color: #2c3e50;
+            color: var(--secondary-color);
             text-decoration: none;
             font-size: 16px;
             transition: .3s;
@@ -61,7 +70,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: #3498db;
+            background-color: var(--primary-color);
             transition: width 0.3s ease;
         }
         .navbar ul li a:hover::after {
@@ -81,7 +90,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         h1, h2 {
-            color: #2c3e50;
+            color: var(--secondary-color);
             text-align: center;
             margin-bottom: 30px;
         }
@@ -93,7 +102,7 @@
             margin-bottom: 30px;
             padding: 20px;
             border-radius: 10px;
-            background-color: #f8f9fa;
+            background-color: var(--item-background);
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
@@ -103,7 +112,7 @@
         }
         .changelog-version {
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--secondary-color);
             margin-bottom: 10px;
             font-size: 1.2em;
         }
@@ -123,9 +132,37 @@
         }
         .changelog-list li:before {
             content: "•";
-            color: #3498db;
+            color: var(--primary-color);
             position: absolute;
             left: 0;
+        }
+        .color-scheme-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .color-scheme-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .color-scheme-button:hover {
+            opacity: 0.8;
+        }
+        #default-scheme {
+            background-color: #3498db;
+            color: white;
+        }
+        #dark-scheme {
+            background-color: #34495e;
+            color: white;
+        }
+        #light-scheme {
+            background-color: #ecf0f1;
+            color: #2c3e50;
         }
         @media (max-width: 768px) {
             .navbar-container {
@@ -162,6 +199,12 @@
     <div class="container">
         <h1>更新日志</h1>
         
+        <div class="color-scheme-buttons">
+            <button id="default-scheme" class="color-scheme-button">默认配色</button>
+            <button id="dark-scheme" class="color-scheme-button">深色模式</button>
+            <button id="light-scheme" class="color-scheme-button">浅色模式</button>
+        </div>
+
         <div class="changelog-item">
             <div class="changelog-version">版本 2.1.0</div>
             <div class="changelog-date">发布日期：2024年7月15日</div>
@@ -195,5 +238,31 @@
             </ul>
         </div>
     </div>
+
+    <script>
+        document.getElementById('default-scheme').addEventListener('click', function() {
+            document.documentElement.style.setProperty('--primary-color', '#3498db');
+            document.documentElement.style.setProperty('--secondary-color', '#2c3e50');
+            document.documentElement.style.setProperty('--background-color', '#f0f2f5');
+            document.documentElement.style.setProperty('--text-color', '#333');
+            document.documentElement.style.setProperty('--item-background', '#f8f9fa');
+        });
+
+        document.getElementById('dark-scheme').addEventListener('click', function() {
+            document.documentElement.style.setProperty('--primary-color', '#3498db');
+            document.documentElement.style.setProperty('--secondary-color', '#ecf0f1');
+            document.documentElement.style.setProperty('--background-color', '#2c3e50');
+            document.documentElement.style.setProperty('--text-color', '#ecf0f1');
+            document.documentElement.style.setProperty('--item-background', '#34495e');
+        });
+
+        document.getElementById('light-scheme').addEventListener('click', function() {
+            document.documentElement.style.setProperty('--primary-color', '#3498db');
+            document.documentElement.style.setProperty('--secondary-color', '#2c3e50');
+            document.documentElement.style.setProperty('--background-color', '#ecf0f1');
+            document.documentElement.style.setProperty('--text-color', '#2c3e50');
+            document.documentElement.style.setProperty('--item-background', '#fff');
+        });
+    </script>
 </body>
 </html>
