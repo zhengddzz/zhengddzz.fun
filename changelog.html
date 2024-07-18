@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文件生成软件 - 更新日志</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f2f5;
-            color: #333;
+            background-color: #f7f9fc;
+            color: #1a202c;
         }
         .navbar {
             position: fixed;
@@ -19,7 +20,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: #2d3748;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
@@ -32,27 +33,39 @@
             padding: 15px 20px;
         }
         .navbar-logo {
+            display: flex;
+            align-items: center;
             font-size: 24px;
             font-weight: bold;
-            color: #2c3e50;
+            color: #f7fafc;
             text-decoration: none;
+        }
+        .navbar-logo img {
+            height: 30px;
+            margin-right: 10px;
         }
         .navbar ul {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
+            flex-wrap: wrap;
         }
         .navbar ul li {
             margin-left: 30px;
         }
         .navbar ul li a {
-            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            color: #f7fafc;
             text-decoration: none;
             font-size: 16px;
             transition: .3s;
             padding: 10px 0;
             position: relative;
+        }
+        .navbar ul li a i {
+            margin-right: 8px;
         }
         .navbar ul li a::after {
             content: '';
@@ -61,7 +74,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: #3498db;
+            background-color: #66d9ef;
             transition: width 0.3s ease;
         }
         .navbar ul li a:hover::after {
@@ -81,7 +94,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         h1, h2 {
-            color: #2c3e50;
+            color: #1a202c;
             text-align: center;
             margin-bottom: 30px;
         }
@@ -92,20 +105,26 @@
         .changelog-item {
             margin-bottom: 20px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #cbd5e0;
         }
         .changelog-item:last-child {
             border-bottom: none;
         }
         .changelog-version {
             font-weight: bold;
-            color: #2c3e50;
+            color: #1a202c;
             margin-bottom: 10px;
         }
         .changelog-date {
             font-size: 0.9em;
-            color: #7f8c8d;
+            color: #718096;
             margin-bottom: 10px;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
         .changelog-list {
             list-style-type: none;
@@ -117,10 +136,22 @@
             position: relative;
         }
         .changelog-list li:before {
-            content: "•";
-            color: #3498db;
+            content: "\f058";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #66d9ef;
             position: absolute;
             left: 0;
+        }
+        pre {
+            background-color: #2d3748;
+            color: #f7fafc;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            font-family: 'Roboto Mono', monospace;
         }
         @media (max-width: 768px) {
             .navbar-container {
@@ -129,6 +160,7 @@
             }
             .navbar ul {
                 margin-top: 15px;
+                flex-wrap: wrap;
             }
             .navbar ul li {
                 margin-left: 0;
@@ -144,12 +176,15 @@
 <body>
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="navbar-logo">文件生成器</a>
+            <a href="index.html" class="navbar-logo">
+                <img src="logo.png" alt="Logo">
+                文件生成器
+            </a>
             <ul>
-                <li><a href="index.html#introduce">介绍</a></li>
-                <li><a href="index.html#overview">概览</a></li>
-                <li><a href="index.html#support">支持</a></li>
-                <li><a href="#">更新日志</a></li>
+                <li><a href="index.html#introduce"><i class="fas fa-info-circle"></i>介绍</a></li>
+                <li><a href="index.html#overview"><i class="fas fa-eye"></i>概览</a></li>
+                <li><a href="index.html#support"><i class="fas fa-life-ring"></i>支持</a></li>
+                <li><a href="#"><i class="fas fa-history"></i>更新日志</a></li>
             </ul>
         </div>
     </nav>
