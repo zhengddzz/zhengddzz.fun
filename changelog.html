@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文件生成软件 - 更新日志</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #3498db;
@@ -12,6 +13,7 @@
             --background-color: #f0f2f5;
             --text-color: #333;
             --item-background: #f8f9fa;
+            --navbar-background: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -28,7 +30,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: var(--navbar-background);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
@@ -51,6 +53,7 @@
             padding: 0;
             margin: 0;
             display: flex;
+            align-items: center;
         }
         .navbar ul li {
             margin-left: 30px;
@@ -136,33 +139,16 @@
             position: absolute;
             left: 0;
         }
-        .color-scheme-buttons {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .color-scheme-button {
-            padding: 10px 20px;
-            margin: 0 10px;
+        #theme-toggle {
+            background: none;
             border: none;
-            border-radius: 5px;
+            color: var(--secondary-color);
+            font-size: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
-        .color-scheme-button:hover {
-            opacity: 0.8;
-        }
-        #default-scheme {
-            background-color: #3498db;
-            color: white;
-        }
-        #dark-scheme {
-            background-color: #34495e;
-            color: white;
-        }
-        #light-scheme {
-            background-color: #ecf0f1;
-            color: #2c3e50;
+        #theme-toggle:hover {
+            color: var(--primary-color);
         }
         @media (max-width: 768px) {
             .navbar-container {
@@ -192,18 +178,13 @@
                 <li><a href="index.html#overview">概览</a></li>
                 <li><a href="index.html#support">支持</a></li>
                 <li><a href="#">更新日志</a></li>
+                <li><button id="theme-toggle"><i class="fas fa-adjust"></i></button></li>
             </ul>
         </div>
     </nav>
 
     <div class="container">
         <h1>更新日志</h1>
-        
-        <div class="color-scheme-buttons">
-            <button id="default-scheme" class="color-scheme-button">默认配色</button>
-            <button id="dark-scheme" class="color-scheme-button">深色模式</button>
-            <button id="light-scheme" class="color-scheme-button">浅色模式</button>
-        </div>
 
         <div class="changelog-item">
             <div class="changelog-version">版本 2.1.0</div>
@@ -240,28 +221,55 @@
     </div>
 
     <script>
-        document.getElementById('default-scheme').addEventListener('click', function() {
-            document.documentElement.style.setProperty('--primary-color', '#3498db');
-            document.documentElement.style.setProperty('--secondary-color', '#2c3e50');
-            document.documentElement.style.setProperty('--background-color', '#f0f2f5');
-            document.documentElement.style.setProperty('--text-color', '#333');
-            document.documentElement.style.setProperty('--item-background', '#f8f9fa');
-        });
+        const themeToggle = document.getElementById('theme-toggle');
+        let currentTheme = 'default';
 
-        document.getElementById('dark-scheme').addEventListener('click', function() {
-            document.documentElement.style.setProperty('--primary-color', '#3498db');
-            document.documentElement.style.setProperty('--secondary-color', '#ecf0f1');
-            document.documentElement.style.setProperty('--background-color', '#2c3e50');
-            document.documentElement.style.setProperty('--text-color', '#ecf0f1');
-            document.documentElement.style.setProperty('--item-background', '#34495e');
-        });
+        const themes = {
+            default: {
+                primaryColor: '#3498db',
+                secondaryColor: '#2c3e50',
+                backgroundColor: '#f0f2f5',
+                textColor: '#333',
+                itemBackground: '#f8f9fa',
+                navbarBackground: 'rgba(255, 255, 255, 0.95)'
+            },
+            dark: {
+                primaryColor: '#3498db',
+                secondaryColor: '#ecf0f1',
+                backgroundColor: '#2c3e50',
+                textColor: '#ecf0f1',
+                itemBackground: '#34495e',
+                navbarBackground: 'rgba(52, 73, 94, 0.95)'
+            },
+            light: {
+                primaryColor: '#3498db',
+                secondaryColor: '#2c3e50',
+                backgroundColor: '#ecf0f1',
+                textColor: '#2c3e50',
+                itemBackground: '#fff',
+                navbarBackground: 'rgba(236, 240, 241, 0.95)'
+            }
+        };
 
-        document.getElementById('light-scheme').addEventListener('click', function() {
-            document.documentElement.style.setProperty('--primary-color', '#3498db');
-            document.documentElement.style.setProperty('--secondary-color', '#2c3e50');
-            document.documentElement.style.setProperty('--background-color', '#ecf0f1');
-            document.documentElement.style.setProperty('--text-color', '#2c3e50');
-            document.documentElement.style.setProperty('--item-background', '#fff');
+        function setTheme(theme) {
+            const root = document.documentElement;
+            for (const [key, value] of Object.entries(themes[theme])) {
+                root.style.setProperty(`--${key}`, value);
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            switch(currentTheme) {
+                case 'default':
+                    currentTheme = 'dark';
+                    break;
+                case 'dark':
+                    currentTheme = 'light';
+                    break;
+                default:
+                    currentTheme = 'default';
+            }
+            setTheme(currentTheme);
         });
     </script>
 </body>
