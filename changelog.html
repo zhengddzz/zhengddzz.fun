@@ -221,60 +221,66 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('theme-toggle');
-            let currentTheme = 'default';
+        const themeToggle = document.getElementById('theme-toggle');
+let currentTheme = 'default';
 
-            const themes = {
-                default: {
-                    primaryColor: '#3498db',
-                    secondaryColor: '#2c3e50',
-                    backgroundColor: '#f0f2f5',
-                    textColor: '#333',
-                    itemBackground: '#f8f9fa',
-                    navbarBackground: 'rgba(255, 255, 255, 0.95)'
-                },
-                dark: {
-                    primaryColor: '#3498db',
-                    secondaryColor: '#ecf0f1',
-                    backgroundColor: '#2c3e50',
-                    textColor: '#ecf0f1',
-                    itemBackground: '#34495e',
-                    navbarBackground: 'rgba(52, 73, 94, 0.95)'
-                },
-                light: {
-                    primaryColor: '#3498db',
-                    secondaryColor: '#2c3e50',
-                    backgroundColor: '#ecf0f1',
-                    textColor: '#2c3e50',
-                    itemBackground: '#fff',
-                    navbarBackground: 'rgba(236, 240, 241, 0.95)'
-                }
-            };
+const themes = {
+    default: {
+        primaryColor: '#3498db',
+        secondaryColor: '#2c3e50',
+        backgroundColor: '#f0f2f5',
+        textColor: '#333',
+        itemBackground: '#f8f9fa',
+        navbarBackground: 'rgba(255, 255, 255, 0.95)'
+    },
+    dark: {
+        primaryColor: '#3498db',
+        secondaryColor: '#ecf0f1',
+        backgroundColor: '#2c3e50',
+        textColor: '#ecf0f1',
+        itemBackground: '#34495e',
+        navbarBackground: 'rgba(52, 73, 94, 0.95)'
+    },
+    light: {
+        primaryColor: '#3498db',
+        secondaryColor: '#2c3e50',
+        backgroundColor: '#ecf0f1',
+        textColor: '#2c3e50',
+        itemBackground: '#fff',
+        navbarBackground: 'rgba(236, 240, 241, 0.95)'
+    }
+};
 
-            function setTheme(theme) {
-                console.log('Setting theme:', theme); // 调试语句
-                const root = document.documentElement;
-                for (const [key, value] of Object.entries(themes[theme])) {
-                    root.style.setProperty(`--${key}`, value);
-                }
-            }
+function setTheme(theme) {
+    const root = document.documentElement;
+    for (const [key, value] of Object.entries(themes[theme])) {
+        root.style.setProperty(`--${key}`, value);
+    }
+}
 
-            themeToggle.addEventListener('click', function() {
-                console.log('Theme toggle clicked'); // 调试语句
-                if (currentTheme === 'default') {
-                    currentTheme = 'dark';
-                } else if (currentTheme === 'dark') {
-                    currentTheme = 'light';
-                } else {
-                    currentTheme = 'default';
-                }
-                setTheme(currentTheme);
-            });
+themeToggle.addEventListener('click', () => {
+    console.log('Theme toggle clicked'); // 添加这行来检查事件是否被触发
+    switch(currentTheme) {
+        case 'default':
+            currentTheme = 'dark';
+            break;
+        case 'dark':
+            currentTheme = 'light';
+            break;
+        default:
+            currentTheme = 'default';
+    }
+    console.log('New theme:', currentTheme); // 添加这行来检查主题是否正确切换
+    setTheme(currentTheme);
+});
 
-            // 初始化主题
-            setTheme(currentTheme);
-        });
+// 确保DOM完全加载后再添加事件监听器
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded');
+    themeToggle.addEventListener('click', () => {
+        console.log('Theme toggle clicked (DOMContentLoaded)');
+    });
+});
     </script>
 </body>
 </html>
