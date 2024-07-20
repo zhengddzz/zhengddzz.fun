@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const changelogItems = document.querySelectorAll('.changelog-item');
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function normalizeVersion(version) {
-        return version.replace(/[.。]/g, '[.。]');
+        return version.replace(/\./g, '[.。]');
     }
 
     function removeHighlights() {
@@ -132,11 +132,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.trim().toLowerCase();
+        const searchTerm = this.value.trim();
         const normalizedSearchTerm = normalizeVersion(escapeRegExp(searchTerm));
 
         changelogItems.forEach(item => {
-            const text = item.textContent.toLowerCase();
+            const text = item.textContent;
             const originalHtml = item.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
 
             if (searchTerm) {
@@ -161,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 添加这个事件监听器来处理搜索框失去焦点的情况
     searchInput.addEventListener('blur', function() {
         if (this.value.trim() === '') {
             removeHighlights();
