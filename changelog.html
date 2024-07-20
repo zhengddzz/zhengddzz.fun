@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文件生成软件 - 更新日志</title>
-    </a>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -69,7 +68,7 @@
             width: 100%;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 120px auto 50px;
             background: #fff;
             padding: 30px;
@@ -90,13 +89,16 @@
             font-size: 2.5em;
             margin-top: 0;
         }
-        .changelog-item {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+        .changelog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
-        .changelog-item:last-child {
-            border-bottom: none;
+        .changelog-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .changelog-version {
             font-weight: bold;
@@ -144,53 +146,53 @@
 </head>
 <body>
     <nav class="navbar">
-    <div class="navbar-container">
-        <a href="#" class="navbar-logo">文件生成器</a>
-        </a>
-        <ul>
-            <li><a href="index.html#introduce">介绍</a></li>
-            <li><a href="index.html#overview">概览</a></li>
-            <li><a href="index.html#support">支持</a></li>
-            <li><a href="#">更新日志</a></li>
-            <li><a href="download.html">软件下载</a></li>
-        </ul>
-    </div>
-</nav>
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">文件生成器</a>
+            <ul>
+                <li><a href="index.html#introduce">介绍</a></li>
+                <li><a href="index.html#overview">概览</a></li>
+                <li><a href="index.html#support">支持</a></li>
+                <li><a href="#">更新日志</a></li>
+                <li><a href="download.html">软件下载</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="container">
         <h1>更新日志</h1>
-        
-        <div class="changelog-item">
-            <div class="changelog-version">版本 2.1.0</div>
-            <div class="changelog-date">发布日期：2024年7月15日</div>
-            <ul class="changelog-list">
-                <li>新增PDF文件生成功能</li>
-                <li>优化Word文档模板系统</li>
-                <li>修复了一些已知的小问题</li>
-                <li>提升了整体性能和稳定性</li>
-            </ul>
-        </div>
+        <div class="changelog-grid">
+            <div class="changelog-item">
+                <div class="changelog-version">版本 2.1.0</div>
+                <div class="changelog-date">发布日期：2024年7月15日</div>
+                <ul class="changelog-list">
+                    <li>新增PDF文件生成功能</li>
+                    <li>优化Word文档模板系统</li>
+                    <li>修复了一些已知的小问题</li>
+                    <li>提升了整体性能和稳定性</li>
+                </ul>
+            </div>
 
-        <div class="changelog-item">
-            <div class="changelog-version">版本 2.0.5</div>
-            <div class="changelog-date">发布日期：2024年6月1日</div>
-            <ul class="changelog-list">
-                <li>增加了对Excel文件的导出支持</li>
-                <li>改进了用户界面的响应速度</li>
-                <li>修复了在某些情况下无法保存设置的问题</li>
-            </ul>
-        </div>
+            <div class="changelog-item">
+                <div class="changelog-version">版本 2.0.5</div>
+                <div class="changelog-date">发布日期：2024年6月1日</div>
+                <ul class="changelog-list">
+                    <li>增加了对Excel文件的导出支持</li>
+                    <li>改进了用户界面的响应速度</li>
+                    <li>修复了在某些情况下无法保存设置的问题</li>
+                </ul>
+            </div>
 
-        <div class="changelog-item">
-            <div class="changelog-version">版本 2.0.0</div>
-            <div class="changelog-date">发布日期：2024年4月10日</div>
-            <ul class="changelog-list">
-                <li>全新的用户界面设计，提供更直观的操作体验</li>
-                <li>引入自定义模板功能，用户可以创建和保存自己的模板</li>
-                <li>增加了对多语言的支持</li>
-                <li>显著提升了文件生成的速度</li>
-                <li>修复了多个用户反馈的问题</li>
-            </ul>
+            <div class="changelog-item">
+                <div class="changelog-version">版本 2.0.0</div>
+                <div class="changelog-date">发布日期：2024年4月10日</div>
+                <ul class="changelog-list">
+                    <li>全新的用户界面设计，提供更直观的操作体验</li>
+                    <li>引入自定义模板功能，用户可以创建和保存自己的模板</li>
+                    <li>增加了对多语言的支持</li>
+                    <li>显著提升了文件生成的速度</li>
+                    <li>修复了多个用户反馈的问题</li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>
