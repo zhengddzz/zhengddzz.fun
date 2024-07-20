@@ -7,103 +7,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
             color: #333;
-        }
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        .navbar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
-        .navbar-logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
-            text-decoration: none;
-        }
-        .navbar ul {
-            list-style: none;
-            padding: 0;
             margin: 0;
-            display: flex;
-        }
-        .navbar ul li {
-            margin-left: 30px;
-        }
-        .navbar ul li a {
-            color: #2c3e50;
-            text-decoration: none;
-            font-size: 16px;
-            transition: .3s;
-            padding: 10px 0;
-            position: relative;
-        }
-        .navbar ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #3498db;
-            transition: width 0.3s ease;
-        }
-        .navbar ul li a:hover::after {
-            width: 100%;
+            padding: 0;
+            background-color: #f4f4f4;
         }
         .container {
-            max-width: 1200px;
-            margin: 120px auto 50px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            animation: fadeIn 1s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        h1, h2 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
         h1 {
-            font-size: 2.5em;
-            margin-top: 0;
+            text-align: center;
+            color: #2c3e50;
         }
         .changelog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
         .changelog-item {
-            background: #fff;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .changelog-item:hover {
+            transform: translateY(-5px);
         }
         .changelog-version {
+            font-size: 1.2em;
             font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #3498db;
         }
         .changelog-date {
             font-size: 0.9em;
@@ -111,36 +49,7 @@
             margin-bottom: 10px;
         }
         .changelog-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .changelog-list li {
-            margin-bottom: 5px;
             padding-left: 20px;
-            position: relative;
-        }
-        .changelog-list li:before {
-            content: "•";
-            color: #3498db;
-            position: absolute;
-            left: 0;
-        }
-        @media (max-width: 768px) {
-            .navbar-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .navbar ul {
-                margin-top: 15px;
-            }
-            .navbar ul li {
-                margin-left: 0;
-                margin-right: 20px;
-            }
-            .container {
-                margin: 100px 20px 20px;
-                padding: 20px;
-            }
         }
         .search-container {
             margin-bottom: 20px;
@@ -160,20 +69,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="#" class="navbar-logo">文件生成器</a>
-            <ul>
-                <li><a href="index.html#introduce">介绍</a></li>
-                <li><a href="index.html#overview">概览</a></li>
-                <li><a href="index.html#support">支持</a></li>
-                <li><a href="#">更新日志</a></li>
-                <li><a href="download.html">软件下载</a></li>
-            </ul>
-        </div>
-    </nav>
-
-<div class="container">
+    <div class="container">
         <h1>更新日志</h1>
         
         <div class="search-container">
@@ -181,7 +77,7 @@
         </div>
 
         <div class="changelog-grid">
-            <div class="changelog-item">
+            <div class="changelog-item" data-version="2.1.0">
                 <div class="changelog-version">版本 2.1.0</div>
                 <div class="changelog-date">发布日期：2024年7月15日</div>
                 <ul class="changelog-list">
@@ -192,7 +88,7 @@
                 </ul>
             </div>
 
-            <div class="changelog-item">
+            <div class="changelog-item" data-version="2.0.5">
                 <div class="changelog-version">版本 2.0.5</div>
                 <div class="changelog-date">发布日期：2024年6月1日</div>
                 <ul class="changelog-list">
@@ -202,7 +98,7 @@
                 </ul>
             </div>
 
-            <div class="changelog-item">
+            <div class="changelog-item" data-version="2.0.0">
                 <div class="changelog-version">版本 2.0.0</div>
                 <div class="changelog-date">发布日期：2024年4月10日</div>
                 <ul class="changelog-list">
@@ -216,7 +112,7 @@
         </div>
     </div>
 
-   <script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-input');
         const changelogItems = document.querySelectorAll('.changelog-item');
@@ -225,15 +121,20 @@
             return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
+        function normalizeVersion(version) {
+            return version.replace(/[.。]/g, '[.。]');
+        }
+
         searchInput.addEventListener('input', function() {
-            const searchTerm = escapeRegExp(this.value.toLowerCase());
+            const searchTerm = this.value.toLowerCase();
+            const normalizedSearchTerm = normalizeVersion(escapeRegExp(searchTerm));
 
             changelogItems.forEach(item => {
                 const text = item.textContent.toLowerCase();
                 const originalHtml = item.innerHTML;
 
                 if (searchTerm) {
-                    const regex = new RegExp(searchTerm, 'gi');
+                    const regex = new RegExp(normalizedSearchTerm, 'gi');
                     if (regex.test(text)) {
                         item.style.display = 'block';
                         item.innerHTML = originalHtml.replace(regex, match => `<span class="highlight">${match}</span>`);
@@ -246,7 +147,14 @@
                 }
             });
         });
+
+        changelogItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const version = this.getAttribute('data-version');
+                window.location.href = `changelog-details.html?version=${version}`;
+            });
+        });
     });
-</script>
+    </script>
 </body>
 </html>
