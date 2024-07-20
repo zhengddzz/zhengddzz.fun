@@ -217,30 +217,34 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('search-input');
-            const changelogItems = document.querySelectorAll('.changelog-item');
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const changelogItems = document.querySelectorAll('.changelog-item');
 
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
 
-                changelogItems.forEach(item => {
-                    const text = item.textContent.toLowerCase();
-                    const highlightedText = item.innerHTML;
+        searchInput.addEventListener('input', function() {
+            const searchTerm = escapeRegExp(this.value.toLowerCase());
 
-                    if (text.includes(searchTerm)) {
-                        item.style.display = 'block';
-                        if (searchTerm.length > 0) {
-                            item.innerHTML = highlightedText.replace(new RegExp(searchTerm, 'gi'), match => `<span class="highlight">${match}</span>`);
-                        } else {
-                            item.innerHTML = highlightedText.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
-                        }
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+            changelogItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                const originalHtml = item.innerHTML;
+
+                if (searchTerm && text.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    const regex = new RegExp(searchTerm, 'gi');
+                    item.innerHTML = originalHtml.replace(regex, match => `<span class="highlight">${match}</span>`);
+                } else if (!searchTerm) {
+                    item.style.display = 'block';
+                    item.innerHTML = originalHtml.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
+                } else {
+                    item.style.display = 'none';
+                }
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>
