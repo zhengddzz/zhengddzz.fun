@@ -113,48 +113,61 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('search-input');
-        const changelogItems = document.querySelectorAll('.changelog-item');
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const changelogItems = document.querySelectorAll('.changelog-item');
 
-        function escapeRegExp(string) {
-            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        }
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
 
-        function normalizeVersion(version) {
-            return version.replace(/[.。]/g, '[.。]');
-        }
+    function normalizeVersion(version) {
+        return version.replace(/[.。]/g, '[.。]');
+    }
 
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const normalizedSearchTerm = normalizeVersion(escapeRegExp(searchTerm));
-
-            changelogItems.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                const originalHtml = item.innerHTML;
-
-                if (searchTerm) {
-                    const regex = new RegExp(normalizedSearchTerm, 'gi');
-                    if (regex.test(text)) {
-                        item.style.display = 'block';
-                        item.innerHTML = originalHtml.replace(regex, match => `<span class="highlight">${match}</span>`);
-                    } else {
-                        item.style.display = 'none';
-                    }
-                } else {
-                    item.style.display = 'block';
-                    item.innerHTML = originalHtml.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
-                }
-            });
+    function removeHighlights() {
+        changelogItems.forEach(item => {
+            item.innerHTML = item.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
         });
+    }
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.trim().toLowerCase();
+        const normalizedSearchTerm = normalizeVersion(escapeRegExp(searchTerm));
 
         changelogItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const version = this.getAttribute('data-version');
-                window.location.href = `changelog-details.html?version=${version}`;
-            });
+            const text = item.textContent.toLowerCase();
+            const originalHtml = item.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
+
+            if (searchTerm) {
+                const regex = new RegExp(normalizedSearchTerm, 'gi');
+                if (regex.test(text)) {
+                    item.style.display = 'block';
+                    item.innerHTML = originalHtml.replace(regex, match => `<span class="highlight">${match}</span>`);
+                } else {
+                    item.style.display = 'none';
+                }
+            } else {
+                item.style.display = 'block';
+                item.innerHTML = originalHtml;
+            }
         });
     });
-    </script>
+
+    changelogItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const version = this.getAttribute('data-version');
+            window.location.href = `changelog-details.html?version=${version}`;
+        });
+    });
+
+    // 添加这个事件监听器来处理搜索框失去焦点的情况
+    searchInput.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+            removeHighlights();
+        }
+    });
+});
+</script>
 </body>
 </html>
