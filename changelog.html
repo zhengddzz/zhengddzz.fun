@@ -216,7 +216,7 @@
         </div>
     </div>
 
-    <script>
+   <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-input');
         const changelogItems = document.querySelectorAll('.changelog-item');
@@ -232,15 +232,17 @@
                 const text = item.textContent.toLowerCase();
                 const originalHtml = item.innerHTML;
 
-                if (searchTerm && text.includes(searchTerm)) {
-                    item.style.display = 'block';
+                if (searchTerm) {
                     const regex = new RegExp(searchTerm, 'gi');
-                    item.innerHTML = originalHtml.replace(regex, match => `<span class="highlight">${match}</span>`);
-                } else if (!searchTerm) {
+                    if (regex.test(text)) {
+                        item.style.display = 'block';
+                        item.innerHTML = originalHtml.replace(regex, match => `<span class="highlight">${match}</span>`);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                } else {
                     item.style.display = 'block';
                     item.innerHTML = originalHtml.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
-                } else {
-                    item.style.display = 'none';
                 }
             });
         });
