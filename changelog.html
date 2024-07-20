@@ -142,6 +142,21 @@
                 padding: 20px;
             }
         }
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #search-input {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+        }
+        .highlight {
+            background-color: yellow;
+        }
     </style>
 </head>
 <body>
@@ -158,8 +173,13 @@
         </div>
     </nav>
 
-    <div class="container">
+<div class="container">
         <h1>更新日志</h1>
+        
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="搜索版本更新...">
+        </div>
+
         <div class="changelog-grid">
             <div class="changelog-item">
                 <div class="changelog-version">版本 2.1.0</div>
@@ -195,5 +215,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const changelogItems = document.querySelectorAll('.changelog-item');
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+
+                changelogItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    const highlightedText = item.innerHTML;
+
+                    if (text.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        if (searchTerm.length > 0) {
+                            item.innerHTML = highlightedText.replace(new RegExp(searchTerm, 'gi'), match => `<span class="highlight">${match}</span>`);
+                        } else {
+                            item.innerHTML = highlightedText.replace(/<span class="highlight">(.*?)<\/span>/gi, '$1');
+                        }
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
