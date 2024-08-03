@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新详情</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .version-info {
+            margin-bottom: 20px;
+        }
+        .version {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .date {
+            font-size: 1em;
+            color: #7f8c8d;
+        }
+        .changelog-list {
+            padding-left: 20px;
+        }
+        .changelog-list li {
+            margin-bottom: 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>更新详情</h1>
+        <div id="changelog-details"></div>
+        <a href="changelog.html" class="back-link">返回更新日志列表</a>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const version = urlParams.get('version');
+
+        const changelogDetails = {
+            '2.1.0': {
+                date: '2024年7月15日',
+                changes: [
+                    '新增PDF文件生成功能：现在用户可以直接生成PDF格式的文件，满足更多文档需求。',
+                    '优化Word文档模板系统：改进了模板的管理和使用方式，使得创建自定义文档更加简单直观。',
+                    '修复了一些已知的小问题：解决了用户反馈的若干bug，提高了软件的稳定性。',
+                    '提升了整体性能和稳定性：通过代码优化和性能调优，使软件运行更加流畅，响应更快。'
+                ]
+            },
+            '2.0.5': {
+                date: '2024年6月1日',
+                changes: [
+                    '增加了对Excel文件的导出支持：用户现在可以将数据直接导出为Excel格式，方便数据分析和处理。',
+                    '改进了用户界面的响应速度：优化了UI渲染过程，使界面切换和操作反馈更加流畅。',
+                    '修复了在某些情况下无法保存设置的问题：解决了一个导致用户设置无法正确保存的bug，提高了用户体验。'
+                ]
+            },
+            '2.0.0': {
+                date: '2024年4月10日',
+                changes: [
+                    '全新的用户界面设计：重新设计了整个用户界面，提供更直观、更现代的操作体验。',
+                    '引入自定义模板功能：用户可以创建、编辑和保存自己的文档模板，大大提高了工作效率。',
+                    '增加了对多语言的支持：新增了英语、日语等多种语言界面，满足国际用户的需求。',
+                    '显著提升了文件生成的速度：通过算法优化，文件生成速度比之前版本提高了50%。',
+                    '修复了多个用户反馈的问题：解决了之前版本中存在的多个bug，提高了软件的稳定性和可靠性。'
+                ]
+            }
+        };
+
+        const detailsContainer = document.getElementById('changelog-details');
+        const versionInfo = changelogDetails[version];
+
+        if (versionInfo) {
+            let html = `
+                <div class="version-info">
+                    <span class="version">版本 ${version}</span>
+                    <span class="date">发布日期：${versionInfo.date}</span>
+                </div>
+                <ul class="changelog-list">
+            `;
+            versionInfo.changes.forEach(change => {
+                html += `<li>${change}</li>`;
+            });
+            html += '</ul>';
+            detailsContainer.innerHTML = html;
+        } else {
+            detailsContainer.innerHTML = '<p>没有找到该版本的更新信息。</p>';
+        }
+    });
+    </script>
+</body>
+</html>
