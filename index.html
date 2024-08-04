@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>导航页</title>
     <style>
+        .visit-count {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(52, 152, 219, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .visit-count:hover {
+            background-color: rgba(41, 128, 185, 1);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -37,6 +55,9 @@
         <h1>导航页</h1>
         <a href="https://tpgs.zhengddzz.fun" class="nav-link">文件生成软件</a>
         <!-- 在这里添加更多链接 -->
+    </div>
+    <div id="busuanzi_container_site_pv" class="visit-count">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
     </div>
 </body>
 </html>
