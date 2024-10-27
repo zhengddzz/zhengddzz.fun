@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>群公告</title>
+
+<!-- CSS 样式 -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .container h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        text-align: center;
+    }
+    .announcement {
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        background: #f0f9ff;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: left;
+    }
+    .announcement-header {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #2980b9;
+        margin-bottom: 10px;
+    }
+    .announcement-time {
+        font-size: 0.9em;
+        color: #95a5a6;
+        margin-bottom: 10px;
+    }
+    .announcement-preview, .announcement-content {
+        color: #34495e;
+        line-height: 1.6;
+        font-size: 1em;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow: hidden;
+    }
+    .announcement-preview {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .announcement-content {
+        display: none;
+    }
+    .toggle-btn {
+        font-size: 0.9em;
+        color: #ffffff;
+        background-color: #3498db;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        display: none;
+        width: 50%;
+        margin: 10px auto;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📢 群公告 📢</h2>
+
+    <!-- 示例公告1 -->
+    <div class="announcement">
+        <div class="announcement-header">公告标题1</div>
+        <div class="announcement-time">发送时间: 2024-10-27 15:00</div>
+        <div class="announcement-preview" id="preview1"></div>
+        <div class="announcement-content" id="content1"></div>
+        <div class="toggle-btn" id="toggle1" onclick="toggleContent(1)">点击展开</div>
+    </div>
+
+    <!-- 示例公告2 -->
+    <div class="announcement">
+        <div class="announcement-header">公告标题2</div>
+        <div class="announcement-time">发送时间: 2024-10-26 18:30</div>
+        <div class="announcement-preview" id="preview2"></div>
+        <div class="announcement-content" id="content2"></div>
+        <div class="toggle-btn" id="toggle2" onclick="toggleContent(2)">点击展开</div>
+    </div>
+</div>
+
+<!-- 引入 marked.js 和 KaTeX -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+
+<script>
+// 公告内容数据
+const announcements = [
+    {
+        id: 1,
+        content: `
+# 欢迎公告
+请阅读以下规则：
+1. **请文明发言**
+2. 支持使用公式，例如 $e^{i\\pi} + 1 = 0$。
+        `
+    },
+    {
+        id: 2,
+        content: `
+# 重要公告
+- **今天晚上的活动取消**。
+- 数学公式示例：$$f(x) = \\int_{-\\infty}^{\\infty} e^{-x^2} dx$$
+        `
+    }
+];
+
+// DOM 加载完成后渲染公告内容
+document.addEventListener("DOMContentLoaded", function() {
+    announcements.forEach(announcement => {
+        const contentElement = document.getElementById(`content${announcement.id}`);
+        const previewElement = document.getElementById(`preview${announcement.id}`);
+        const toggleBtn = document.getElementById(`toggle${announcement.id}`);
+
+        // 设置内容预览
+        const plainTextContent = announcement.content.replace(/[#*_]/g, ''); // 去除Markdown符号
+        if (plainTextContent.length > 150) {
+            previewElement.textContent = plainTextContent.slice(0, 150) + "...";
+            toggleBtn.style.display = "block";
+        } else {
+            previewElement.style.display = "none";
+            contentElement.innerHTML = marked.parse(announcement.content);
+            renderMathInElement(contentElement, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+            contentElement.style.display = "block";
+        }
+    });
+});
+
+// 展开/收起公告内容
+function toggleContent(id) {
+    const contentElement = document.getElementById(`content${id}`);
+    const previewElement = document.getElementById(`preview${id}`);
+    const toggleBtn = document.getElementById(`toggle${id}`);
+    if (contentElement.style.display === "none") {
+        // 渲染Markdown和LaTeX公式
+        contentElement.innerHTML = marked.parse(announcements.find(a => a.id === id).content);
+        renderMathInElement(contentElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false }
+            ]
+        });
+        
+        contentElement.style.display = "block";
+        previewElement.style.display = "none";
+        toggleBtn.textContent = "点击收起";
+    } else {
+        contentElement.style.display = "none";
+        previewElement.style.display = "block";
+        toggleBtn.textContent = "点击展开";
+    }
+}
+</script>
+
+</body>
+</html>
