@@ -102,10 +102,10 @@
 </div>
 
 <!-- 引入 marked.js 和 KaTeX -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-<script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" defer></script>
+<script src="" defer></script>
+<link rel="stylesheet" href="">
+<script src="" defer></script>
+<script src="" defer></script>
 
 <script>
 // 公告内容数据
@@ -117,6 +117,7 @@ const announcements = [
 请阅读以下规则：
 1. **请文明发言**
 2. 支持使用公式，例如 $e^{i\\pi} + 1 = 0$。
+
         `
     },
     {
@@ -124,10 +125,17 @@ const announcements = [
         content: `
 # 重要公告
 - **今天晚上的活动取消**。
+
 - 数学公式示例：$$f(x) = \\int_{-\\infty}^{\\infty} e^{-x^2} dx$$
+
         `
     }
 ];
+
+// 清除多余空行的函数
+function removeExtraNewlines(text) {
+    return text.replace(/\n\s*\n/g, '\n');
+}
 
 // DOM 加载完成后渲染公告内容
 document.addEventListener("DOMContentLoaded", function() {
@@ -136,14 +144,17 @@ document.addEventListener("DOMContentLoaded", function() {
         const previewElement = document.getElementById(`preview${announcement.id}`);
         const toggleBtn = document.getElementById(`toggle${announcement.id}`);
 
+        // 清除内容中的多余空行
+        const cleanContent = removeExtraNewlines(announcement.content);
+        
         // 设置内容预览
-        const plainTextContent = announcement.content.replace(/[#*_]/g, ''); // 去除Markdown符号
+        const plainTextContent = cleanContent.replace(/[#*_]/g, ''); // 去除Markdown符号
         if (plainTextContent.length > 150) {
             previewElement.textContent = plainTextContent.slice(0, 150) + "...";
             toggleBtn.style.display = "block";
         } else {
             previewElement.style.display = "none";
-            contentElement.innerHTML = marked.parse(announcement.content);
+            contentElement.innerHTML = marked.parse(cleanContent);
             renderMathInElement(contentElement, {
                 delimiters: [
                     { left: "$$", right: "$$", display: true },
@@ -162,7 +173,8 @@ function toggleContent(id) {
     const toggleBtn = document.getElementById(`toggle${id}`);
     if (contentElement.style.display === "none") {
         // 渲染Markdown和LaTeX公式
-        contentElement.innerHTML = marked.parse(announcements.find(a => a.id === id).content);
+        const cleanContent = removeExtraNewlines(announcements.find(a => a.id === id).content);
+        contentElement.innerHTML = marked.parse(cleanContent);
         renderMathInElement(contentElement, {
             delimiters: [
                 { left: "$$", right: "$$", display: true },
