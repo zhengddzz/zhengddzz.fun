@@ -1,265 +1,170 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zhengddzz | 数字空间</title>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>zhengddzz导航页</title>
     <style>
-        :root {
-            --primary: #4CAF50;
-            --glass: rgba(255, 255, 255, 0.1);
-            --border: rgba(255, 255, 255, 0.2);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* 动态背景 */
         body {
+            margin: 0;
             min-height: 100vh;
-            font-family: 'Segoe UI', system-ui;
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            display: grid;
-            place-items: center;
-            padding: 1rem;
-        }
-
-        .dashboard {
-            width: min(95%, 1200px);
-            display: grid;
-            gap: 2rem;
-            grid-template-areas:
-                "header   header"
-                "quote    stats"
-                "cloud    social"
-                "tools    social";
-            grid-template-columns: 2fr 1fr;
-        }
-
-        .header {
-            grid-area: header;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            text-align: center;
-            color: white;
-        }
-
-        .quote-card {
-            grid-area: quote;
-            min-height: 120px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 1rem;
-            padding: 1.5rem;
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
+            align-items: center;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Segoe UI', sans-serif;
         }
 
-        .quote-card::before {
-            content: "“";
-            position: absolute;
-            font-size: 8rem;
-            opacity: 0.1;
-            top: -2rem;
-            left: -1rem;
+        /* 背景动画 */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        #hitokoto {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.9);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .refresh-quote {
-            align-self: flex-end;
-            background: none;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .refresh-quote:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stats-card {
-            grid-area: stats;
-        }
-
-        .cloud-card {
-            grid-area: cloud;
-        }
-
-        .tools-card {
-            grid-area: tools;
-        }
-
-        .social-card {
-            grid-area: social;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .link-grid {
+        /* 导航容器 */
+        .nav-container {
             display: grid;
-            gap: 1rem;
+            gap: 1.5rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .nav-link {
+        /* 导航按钮 */
+        .nav-button {
+            position: relative;
             display: flex;
             align-items: center;
-            padding: 1.2rem;
-            background: rgba(255,255,255,0.9);
-            border-radius: 1rem;
+            padding: 1.5rem 3rem;
             text-decoration: none;
-            color: #333;
-            transition: var(--transition);
+            border-radius: 15px;
+            color: white;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: translateY(0);
         }
 
-        .nav-link:hover {
-            background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transform: scale(1.02);
+        /* 按钮悬浮效果 */
+        .nav-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
+        /* 按钮光效 */
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            animation: shine 3s infinite;
+        }
+
+        /* 图标样式 */
+        .nav-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        /* 按钮文字 */
+        .nav-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* 按钮颜色方案 */
+        .blog-btn { background: linear-gradient(45deg, #FF6B6B, #FF8E53); }
+        .cloud-btn { background: linear-gradient(45deg, #4ECDC4, #45B7D1); }
+        .forum-btn { background: linear-gradient(45deg, #AC92EC, #9670E8); }
+        .tool-btn { background: linear-gradient(45deg, #FFCE54, #FCBB42); }
+
+        /* 光效动画 */
+        @keyframes shine {
+            100% { left: 100%; }
+        }
+
+        /* 点击涟漪效果 */
+        .nav-button:active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            from { opacity: 1; transform: scale(0); }
+            to { opacity: 0; transform: scale(2); }
+        }
+
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            .dashboard {
-                grid-template-areas:
-                    "header"
-                    "quote"
-                    "stats"
-                    "cloud"
-                    "tools"
-                    "social";
-                grid-template-columns: 1fr;
+            .nav-container {
+                width: 90%;
+                padding: 1.5rem;
             }
-            
-            .quote-card {
-                min-height: auto;
+            .nav-button {
+                padding: 1.2rem 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <header class="header">
-            <h1>zhengddzz 的数字空间</h1>
-            <p>探索无限可能</p>
-        </header>
+    <div class="nav-container">
+        <a href="http://blog.zhengddzz.fun" 
+           class="nav-button blog-btn"
+           target="_blank"
+           rel="noopener">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptLTEuOTU5IDE4Ljg4OWgtMS45MjhjLS4zNjYtLjc1My0uNzQ0LTEuNjEzLTEuMTI2LTIuNTgyLS4zODItLjk2OS0uNzYtMS45MzUtMS4xMzYtMi45MDQtLjM3Ni0uOTY5LS43Mi0xLjkxNS0xLjAzLTIuODM3LS4zMS0uOTIyLS41NTQtMS43NzEtLjczMy0yLjU0N2gtMi4wNnYtMS40aDMuMDY0Yy4xNjItLjY1OC4zMDktMS4yODQuNDQtMS44NzguMTMtLjU5NC4yNDctMS4xNzMuMzUxLTEuNzM2aC0zLjg1NXYtMS40aDQuMTQyYy4xMDktLjQ4OC4yMTItLjk2Mi4zMTEtMS40MjEuMS0uNDU5LjE5Mi0uODY0LjI3OC0xLjIxM2guMjk3Yy4wNzQuMzY5LjE2LjgxNC4yNjggMS4zMzcuMTA3LjUyMy4yMjMgMS4wNjIuMzQ4IDEuNjE1aDQuNTQ0di0xLjRoLTEuNjQ1Yy0uMjM1LS45MzUtLjQ0OC0xLjc3OC0uNjQtMi41MjdzLS4zNDYtMS4zNDgtLjQ2MS0xLjg1M2gtMS44NThjLS4xMTQuNTA1LS4yOTkgMS4xODgtLjU1NCAyLjA1LS4yNTUuODYyLS41MzYgMS44MDYtLjg0MyAyLjg0aDQuNTY1djEuNGgtMy42MjVjLS4xNzkuNzc2LS4zNzkgMS41ODUtLjYgMi40MjItLjIyLjgzNy0uNDI0IDEuNjM0LS42MTMgMi4zOTJoNC4yMTR2MS40em0xLjkwNyAwdi0xLjQwMWgtNC4yMDNjLS4xODktLjc1OC0uMzkzLTEuNTU1LS42MTMtMi4zOTItLjIyMS0uODM3LS40MjEtMS42NDYtLjYtMi40MjJoMy42MjV2LTEuNGgtNC41NjVjLS4zMDctMS4wMzQtLjU4OC0xLjk3OC0uODQzLTIuODQtLjI1NS0uODYyLS40NC0xLjU0NS0uNTU0LTIuMDVoMS42NDV2LTEuNGgtNC41NDRjLS4xMjUtLjU1My0uMjQxLTEuMDkyLS4zNDgtMS42MTUtLjEwOC0uNTIzLS4xOTQtLjk2OC0uMjY4LTEuMzM3aC0uMjk3Yy0uMDg2LjM0OS0uMTc4Ljc1NC0uMjc4IDEuMjEzLS4wOTkuNDU5LS4yMDIuOTMzLS4zMTEgMS40MjFoLjQxOXYxLjRoLTMuODU1Yy0uMTA0LjU2My0uMjIxIDEuMTQyLS4zNTEgMS43MzYtLjEzMS41OTQtLjI3OCAxLjIyLS40NCAxLjg3OGgtMy4wNjR2MS40aDIuMDZjLjE3OS43NzYuMzY3IDEuNjI1LjczMyAyLjU0Ny4zNjYuOTIyLjcwNiAxLjg2OCAxLjAzIDIuODM3LjMyNCAuOTY5LjY5NSAxLjkzNSAxLjEzNiAyLjkwNC4zNDEuOTY5LjcxMSAxLjgyOSAxLjEyNiAyLjU4MmgxLjkyOHYxLjQwMWgtNS45ODR2MS40aDkuOTQydi0xLjRoLTUuOTg0eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" 
+                 class="nav-icon">
+            <span class="nav-text">个人博客</span>
+        </a>
 
-        <div class="quote-card">
-            <div id="hitokoto">正在加载智慧语录...</div>
-            <button class="refresh-quote" onclick="fetchHitokoto()">换一句</button>
-        </div>
+        <a href="https://pan.zhengddzz.fun:21000" 
+           class="nav-button cloud-btn"
+           target="_blank"
+           rel="noopener">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTkgMjFoLTJ2LTEuNWEyLjUgMi41IDAgMCAwLTUtLjAxN2gtLjAxYy0uMTc0LjAwMS0uMzQ4LjAzMy0uNTEzLjA4N2wtLjk5OC0xLjc0NmMuMjM4LS4xODkuNTA0LS4zNDQuNzk1LS40NDZMMTIgMTZjMS42NTcgMCAzIDEuMzQzIDMgM3YyaC0xMGMtMS4xMDQgMC0yLS44OTYtMi0ydi0xNGMwLTEuMTA0Ljg5Ni0yIDItMmgxNmMxLjEwNCAwIDIgLjg5NiAyIDJ2MTRjMCAxLjEwNC0uODk2IDItMiAyem0tNy41LTVjLS44MjkgMC0xLjUtLjY3Mi0xLjUtMS41czY3Mi0xLjUgMS41LTEuNSAxLjUuNjcyIDEuNSAxLjUtLjY3MSAxLjUtMS41IDEuNXptMC0yYy0uMjc2IDAtLjUuMjI0LS41LjVzLjIyNC41LjUuNS41LS4yMjQuNS0uNS0uMjI0LS41LS41LS41em00LjUgM2g3djJoLTd2LTJ6bS0xMS41LTVjLS44MjkgMC0xLjUtLjY3Mi0xLjUtMS41czY3Mi0xLjUgMS41LTEuNSAxLjUuNjcyIDEuNSAxLjUtLjY3MSAxLjUtMS41IDEuNXptMC0yYy0uMjc2IDAtLjUuMjI0LS41LjVzLjIyNC41LjUuNS41LS4yMjQuNS0uNS0uMjI0LS41LS41LS41eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" 
+                 class="nav-icon">
+            <span class="nav-text">私有云盘</span>
+        </a>
 
-        <section class="card stats-card">
-            <h2>📊 访问统计</h2>
-            <canvas id="visitChart"></canvas>
-            <div class="busuanzi-stats" style="margin-top:1rem;">
-                总访问量: <span id="busuanzi_value_site_pv"></span>
-            </div>
-        </section>
+        <a href="https://forum.zhengddzz.fun" 
+           class="nav-button forum-btn"
+           target="_blank"
+           rel="noopener">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjQgMTIuMDczYzAtNS45MjMtNC4wNzctMTAuNzItOS43Ni0xMi4xNDMtLjU2NS0uMTQ0LTEuMTEuMzM4LS45NDYuODg1LjQxNiAxLjM5Mi42NjIgMi44NS42NjIgNC4zODUgMCAzLjMxNC0yLjY4NiA2LTIuOTUyIDYuMjE0LjA5My4yMTkuMTQ2LjQ0Ni4xNDYuNjg0di45NTFsMy45MTkgMi4wMjFjLjU3MS4yOTIgMS4wODELS4xNTYuOTgyLS43MDR6bS0yMS45NDEtMS4wOTJ2Ljk1MWMwIC4yMzguMDUzLjQ2NS4xNDYuNjg0LS4yNjYtLjIxNC0yLjk1Mi0yLjktMi45NTItNi4yMTQgMC0xLjUzNS4yNDYtMi45OTMuNjYyLTQuMzg1LjE2NC0uNTQ3LS4zOC0xLjAyOS0uOTQ2LS44ODUtNS42ODMgMS40MjMtOS43NiA2LjIyLTkuNzYgMTIuMTQzIDAgMS4wNTYuMTg4IDIuMDc2LjUzMSAzLjA1OC4wOTQuMzYxLjQzOC42MDQuODA2LjUxM2w0LjgxOC0xLjIzM2MuMjY4LS4wNjguNDQ1LS4zMjQuMzgzLS41ODZ6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" 
+                 class="nav-icon">
+            <span class="nav-text">技术论坛</span>
+        </a>
 
-        <section class="card cloud-card">
-            <h2>🌩️ 云端服务</h2>
-            <div class="link-grid">
-                <a href="https://pan.zhengddzz.fun" class="nav-link">📁 私有云盘</a>
-                <a href="https://forum.zhengddzz.fun" class="nav-link">💬 技术论坛</a>
-            </div>
-        </section>
-
-        <section class="card tools-card">
-            <h2>⚒️ 开发工具</h2>
-            <div class="link-grid">
-                <a href="https://tpgs.zhengddzz.fun" class="nav-link">🧪 测试点生成器</a>
-            </div>
-        </section>
-
-        <section class="card social-card">
-            <h2>🌐 社交网络</h2>
-            <div class="link-grid">
-                <a href="https://nightly.paw.msgbyte.com/invite/7vKIZkM3" class="nav-link">👥 即时交流</a>
-                <a href="https://github.com/zhengddzz" class="nav-link">🐙 GitHub</a>
-                <a href="https://www.luogu.com/user/982385" class="nav-link">🏆 洛谷空间</a>
-                <a href="https://blog.csdn.net/m0_63558278" class="nav-link">📝 CSDN博客</a>
-            </div>
-        </section>
+        <a href="https://tpgs.zhengddzz.fun" 
+           class="nav-button tool-btn"
+           target="_blank"
+           rel="noopener">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjAgN2gt0LjY0NmwtMS4yMjYtMi43NDRj0.3410.6580.658 0 0 0LS41OTgtMS40OTVoLTcuMDYxYy0uMjU3IDAtLjQ5Mi4xNDItLjU5OC4zNjZsLTEuMjI2IDIuNzQ0aC00LjY0NHYtM2gyMHYzem0tMTYgOWgxOHYzaC0xOHYtM3ptMTUuMTc0IDJoLTEyLjM0OGwtMS4yMjYgMi43NDRjLS4xMDYuMjI0LS4zNDEuMzY2LS41OTguMzY2aC03LjA2MWMtLjI1NyAwLS40OTItLjE0Mi0uNTk4LS4zNjZsLTEuMjI2LTIuNzQ0aC0yLjY0NHYzaDIydi0zaC0yLjM0NnoiIGZpbGw9IndoaXRlIi8+PC9zdmc+" 
+                 class="nav-icon">
+            <span class="nav-text">测试点生成软件</span>
+        </a>
     </div>
-
-    <script>
-        // 随机一言功能
-        async function fetchHitokoto() {
-            const hitokoto = document.getElementById('hitokoto');
-            try {
-                hitokoto.textContent = '获取智慧中...';
-                const response = await fetch('https://uapis.cn/api/say');
-                const data = await response.json();
-                hitokoto.textContent = data.sentence || data.msg;
-            } catch (error) {
-                hitokoto.textContent = '获取语录失败，点击重试';
-                console.error('请求失败:', error);
-            }
-        }
-
-        // 初始化
-        fetchHitokoto();
-
-        // 访问统计图表
-        const ctx = document.getElementById('visitChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-                datasets: [{
-                    label: '访问趋势',
-                    data: [12, 19, 3, 5, 2, 3, 15],
-                    borderColor: 'rgba(255,255,255,0.8)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { display: false },
-                    x: { color: 'rgba(255,255,255,0.6)' }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
