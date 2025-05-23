@@ -3,168 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zhengddzz导航页</title>
+    <title>ZhengDD 资源导航</title>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* 动态背景 */
-        body {
+        /* 基础样式（网页4、网页7） */
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            font-family: 'Segoe UI', sans-serif;
         }
 
-        /* 背景动画 */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 导航容器 */
-        。nav-container {
-            display: grid;
-            gap: 1.5rem;
-            padding: 2rem;
+        /* 导航栏（网页4、网页7优化） */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
 
-        /* 导航按钮 */
-        .nav-button {
-            position: relative;
+        .nav-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            text-decoration: none;
             display: flex;
             align-items: center;
-            padding: 1.5rem 3rem;
-            text-decoration: none;
-            border-radius: 15px;
-            color: white;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            transform: translateY(0);
+            gap: 0.5rem;
         }
 
-        /* 按钮悬浮效果 */
-        .nav-button:hover {
+        /* 主内容区（网页3、网页6灵感） */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 2rem;
+        }
+
+        /* 网站卡片（网页2、网页6交互优化） */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        /* 按钮光效 */
-        .nav-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                rgba(255,255,255,0) 0%,
-                rgba(255,255,255,0.3) 50%,
-                rgba(255,255,255,0) 100%
-            );
-            animation: shine 3s infinite;
+        .card-icon {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 1rem;
         }
 
-        /* 图标样式 */
-        .nav-icon {
-            width: 30px;
-            height: 30px;
-            margin-right: 1rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* 按钮文字 */
-        .nav-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        .card-desc {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        /* 按钮颜色方案 */
-        .blog-btn { background: linear-gradient(45deg, #FF6B6B, #FF8E53); }
-        .cloud-btn { background: linear-gradient(45deg, #4ECDC4, #45B7D1); }
-        .forum-btn { background: linear-gradient(45deg, #AC92EC, #9670E8); }
-        .tool-btn { background: linear-gradient(45deg, #FFCE54, #FCBB42); }
-
-        /* 光效动画 */
-        @keyframes shine {
-            100% { left: 100%; }
+        .card-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #3498db;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease;
         }
 
-        /* 点击涟漪效果 */
-        .nav-button:active::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.3);
-            animation: ripple 0.6s ease-out;
+        .card-link:hover {
+            background: #2980b9;
         }
 
-        @keyframes ripple {
-            from { opacity: 1; transform: scale(0); }
-            to { opacity: 0; transform: scale(2); }
-        }
-
-        /* 响应式设计 */
+        /* 响应式设计（网页4、网页7） */
         @media (max-width: 768px) {
-            .nav-container {
-                width: 90%;
-                padding: 1.5rem;
+            .grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
             }
-            .nav-button {
-                padding: 1.2rem 2rem;
+            
+            .navbar {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="nav-container">
-        <a href="http://blog.zhengddzz.com" 
-           class="nav-button blog-btn"
-           target="_blank"
-           rel="noopener">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptLTEuOTU5IDE4Ljg4OWgtMS45MjhjLS4zNjYtLjc1My0uNzQ0LTEuNjEzLTEuMTI2LTIuNTgyLS4zODItLjk2OS0uNzYtMS45MzUtMS4xMzYtMi45MDQtLjM3Ni0uOTY5LS43Mi0xLjkxNS0xLjAzLTIuODM3LS4zMS0uOTIyLS41NTQtMS43NzEtLjczMy0yLjU0N2gtMi4wNnYtMS40aDMuMDY0Yy4xNjItLjY1OC4zMDktMS4yODQuNDQtMS44NzguMTMtLjU5NC4yNDctMS4xNzMuMzUxLTEuNzM2aC0zLjg1NXYtMS40aDQuMTQyYy4xMDktLjQ4OC4yMTItLjk2Mi4zMTEtMS40MjEuMS0uNDU5LjE5Mi0uODY0LjI3OC0xLjIxM2guMjk3Yy4wNzQuMzY5LjE2LjgxNC4yNjggMS4zMzcuMTA3LjUyMy4yMjMgMS4wNjIuMzQ4IDEuNjE1aDQuNTQ0di0xLjRoLTEuNjQ1Yy0uMjM1LS45MzUtLjQ0OC0xLjc3OC0uNjQtMi41MjdzLS4zNDYtMS4zNDgtLjQ2MS0xLjg1M2gtMS44NThjLS4xMTQuNTA1LS4yOTkgMS4xODgtLjU1NCAyLjA1LS4yNTUuODYyLS41MzYgMS44MDYtLjg0MyAyLjg0aDQuNTY1djEuNGgtMy42MjVjLS4xNzkuNzc2LS4zNzkgMS41ODUtLjYgMi40MjItLjIyLjgzNy0uNDI0IDEuNjM0LS42MTMgMi4zOTJoNC4yMTR2MS40em0xLjkwNyAwdi0xLjQwMWgtNC4yMDNjLS4xODktLjc1OC0uMzkzLTEuNTU1LS42MTMtMi4zOTItLjIyMS0uODM3LS40MjEtMS42NDYtLjYtMi40MjJoMy42MjV2LTEuNGgtNC41NjVjLS4zMDctMS4wMzQtLjU4OC0xLjk3OC0uODQzLTIuODQtLjI1NS0uODYyLS40NC0xLjU0NS0uNTU0LTIuMDVoMS42NDV2LTEuNGgtNC41NDRjLS4xMjUtLjU1My0uMjQxLTEuMDkyLS4zNDgtMS42MTUtLjEwOC0uNTIzLS4xOTQtLjk2OC0uMjY4LTEuMzM3aC0uMjk3Yy0uMDg2LjM0OS0uMTc4Ljc1NC0uMjc4IDEuMjEzLS4wOTkuNDU5LS4yMDIuOTMzLS4zMTEgMS40MjFoLjQxOXYxLjRoLTMuODU1Yy0uMTA0LjU2My0uMjIxIDEuMTQyLS4zNTEgMS43MzYtLjEzMS41OTQtLjI3OCAxLjIyLS40NCAxLjg3OGgtMy4wNjR2MS40aDIuMDZjLjE3OS43NzYuMzY3IDEuNjI1LjczMyAyLjU0Ny4zNjYuOTIyLjcwNiAxLjg2OCAxLjAzIDIuODM3LjMyNCAuOTY5LjY5NSAxLjkzNSAxLjEzNiAyLjkwNC4zNDEuOTY5LjcxMSAxLjgyOSAxLjEyNiAyLjU4MmgxLjkyOHYxLjQwMWgtNS45ODR2MS40aDkuOTQydi0xLjRoLTUuOTg0eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" 
-                 class="nav-icon">
-            <span class="nav-text">个人博客</span>
+    <nav class="navbar">
+        <a href="#" class="nav-brand">
+            <i class="fas fa-compass"></i>
+            ZhengDD导航
         </a>
+    </nav>
 
-        <a href="https://pan.zhengddzz.fun:21000" 
-           class="nav-button cloud-btn"
-           target="_blank"
-           rel="noopener">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTkgMjFoLTJ2LTEuNWEyLjUgMi41IDAgMCAwLTUtLjAxN2gtLjAxYy0uMTc0LjAwMS0uMzQ4LjAzMy0uNTEzLjA4N2wtLjk5OC0xLjc0NmMuMjM4LS4xODkuNTA0LS4zNDQuNzk1LS40NDZMMTIgMTZjMS42NTcgMCAzIDEuMzQzIDMgM3YyaC0xMGMtMS4xMDQgMC0yLS44OTYtMi0ydi0xNGMwLTEuMTA0Ljg5Ni0yIDItMmgxNmMxLjEwNCAwIDIgLjg5NiAyIDJ2MTRjMCAxLjEwNC0uODk2IDItMiAyem0tNy41LTVjLS44MjkgMC0xLjUtLjY3Mi0xLjUtMS41czY3Mi0xLjUgMS41LTEuNSAxLjUuNjcyIDEuNSAxLjUtLjY3MSAxLjUtMS41IDEuNXptMC0yYy0uMjc2IDAtLjUuMjI0LS41LjVzLjIyNC41LjUuNS41LS4yMjQuNS0uNS0uMjI0LS41LS41LS41em00LjUgM2g3djJoLTd2LTJ6bS0xMS41LTVjLS44MjkgMC0xLjUtLjY3Mi0xLjUtMS41czY3Mi0xLjUgMS41LTEuNSAxLjUuNjcyIDEuNSAxLjUtLjY3MSAxLjUtMS41IDEuNXptMC0yYy0uMjc2IDAtLjUuMjI0LS41LjVzLjIyNC41LjUuNS41LS4yMjQuNS0uNS0uMjI0LS41LS41LS41eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" 
-                 class="nav-icon">
-            <span class="nav-text">私有云盘</span>
-        </a>
+    <div class="container">
+        <div class="grid">
+            <!-- 博客 -->
+            <div class="card" onclick="window.open('https://blog.zhengddzz.com')">
+                <i class="fas fa-blog card-icon"></i>
+                <h3 class="card-title">技术博客</h3>
+                <p class="card-desc">分享最新技术文章与开发经验，涵盖前端、后端、DevOps等领域。</p>
+                <a href="https://blog.zhengddzz.com" class="card-link">立即访问</a>
+            </div>
 
-        <a href="https://forum.zhengddzz.com" 
-           class="nav-button forum-btn"
-           target="_blank"
-           rel="noopener">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjQgMTIuMDczYzAtNS45MjMtNC4wNzctMTAuNzItOS43Ni0xMi4xNDMtLjU2NS0uMTQ0LTEuMTEuMzM4LS45NDYuODg1LjQxNiAxLjM5Mi42NjIgMi44NS42NjIgNC4zODUgMCAzLjMxNC0yLjY4NiA2LTIuOTUyIDYuMjE0LjA5My4yMTkuMTQ2LjQ0Ni4xNDYuNjg0di45NTFsMy45MTkgMi4wMjFjLjU3MS4yOTIgMS4wODELS4xNTYuOTgyLS43MDR6bS0yMS45NDEtMS4wOTJ2Ljk1MWMwIC4yMzguMDUzLjQ2NS4xNDYuNjg0LS4yNjYtLjIxNC0yLjk1Mi0yLjktMi45NTItNi4yMTQgMC0xLjUzNS4yNDYtMi45OTMuNjYyLTQuMzg1LjE2NC0uNTQ3LS4zOC0xLjAyOS0uOTQ2LS44ODUtNS42ODMgMS40MjMtOS43NiA2LjIyLTkuNzYgMTIuMTQzIDAgMS4wNTYuMTg4IDIuMDc2LjUzMSAzLjA1OC4wOTQuMzYxLjQzOC42MDQuODA2LjUxM2w0LjgxOC0xLjIzM2MuMjY4LS4wNjguNDQ1LS4zMjQuMzgzLS41ODZ6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" 
-                 class="nav-icon">
-            <span class="nav-text">技术论坛</span>
-        </a>
+            <!-- 网盘 -->
+            <div class="card" onclick="window.open('https://pan.zhengddzz.fun')">
+                <i class="fas fa-cloud-upload-alt card-icon"></i>
+                <h3 class="card-title">云存储</h3>
+                <p class="card-desc">安全可靠的云存储服务，支持大文件上传下载与在线预览。</p>
+                <a href="https://pan.zhengddzz.fun" class="card-link">进入网盘</a>
+            </div>
 
-        <a href="https://tpgs.zhengddzz.com" 
-           class="nav-button tool-btn"
-           target="_blank"
-           rel="noopener">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjAgN2gt0LjY0NmwtMS4yMjYtMi43NDRj0.3410.6580.658 0 0 0LS41OTgtMS40OTVoLTcuMDYxYy0uMjU3IDAtLjQ5Mi4xNDItLjU5OC4zNjZsLTEuMjI2IDIuNzQ0aC00LjY0NHYtM2gyMHYzem0tMTYgOWgxOHYzaC0xOHYtM3ptMTUuMTc0IDJoLTEyLjM0OGwtMS4yMjYgMi43NDRjLS4xMDYuMjI0LS4zNDEuMzY2LS41OTguMzY2aC03LjA2MWMtLjI1NyAwLS40OTItLjE0Mi0uNTk4LS4zNjZsLTEuMjI2LTIuNzQ0aC0yLjY0NHYzaDIydi0zaC0yLjM0NnoiIGZpbGw9IndoaXRlIi8+PC9zdmc+" 
-                 class="nav-icon">
-            <span class="nav-text">测试点生成软件</span>
-        </a>
+            <!-- 论坛 -->
+            <div class="card" onclick="window.open('https://forum.zhengddzz.com')">
+                <i class="fas fa-comments card-icon"></i>
+                <h3 class="card-title">技术论坛</h3>
+                <p class="card-desc">开发者交流社区，涵盖技术问答、项目协作、行业资讯等板块。</p>
+                <a href="https://forum.zhengddzz.com" class="card-link">加入讨论</a>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // 卡片点击效果（网页6、网页8增强）
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'A') {
+                    card.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        card.style.transform = '';
+                    }, 200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
